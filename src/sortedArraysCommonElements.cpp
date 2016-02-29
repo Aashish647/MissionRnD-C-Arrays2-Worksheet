@@ -23,7 +23,38 @@ struct transaction {
 	char date[11];
 	char description[20];
 };
-
+int date_check(char *t, char *s);
 struct transaction * sortedArraysCommonElements(struct transaction *A, int ALen, struct transaction *B, int BLen) {
-	return NULL;
+	
+	if ((A == NULL) || (B == NULL))
+	{
+		return NULL;
+	}
+	struct transaction *res = NULL;
+	int i, j, m = 0, index = 0;
+	for (i = 0; i < ALen; i++)
+	{
+		for (j = 0; j < BLen; j++)
+		{
+			if (date_check(A[i].date, B[j].date))
+			{
+				index += 1;
+				res = (struct transaction *)realloc(res, index*sizeof(struct transaction));
+				res[index - 1] = B[j];
+			}
+		}
+	}
+	return res;
+}
+int date_check(char *t, char *s)
+{
+	int i;
+	for (i = 0; i < 10; i++)
+	{
+		if (t[i] != s[i])
+		{
+			return 0;
+		}
+	}
+	return 1;
 }
